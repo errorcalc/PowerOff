@@ -39,6 +39,7 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = ''
       TabOrder = 0
+      TabStop = False
       Text = 'TabItemSet'
       ExplicitSize.cx = 12.000000000000000000
       ExplicitSize.cy = 12.000000000000000000
@@ -189,6 +190,7 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = ''
       TabOrder = 0
+      TabStop = False
       Text = 'TabItemRun'
       object Label2: TLabel
         Align = Top
