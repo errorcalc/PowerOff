@@ -4,4 +4,4 @@
 Кроме того это мой первый публичный проект с использованием технологии FireMonkey.
 
 # Скачать приложение PowerOff:
-https://raw.githubusercontent.com/errorcalc/PowerOff/Release/PowerOff.exe
+https://raw.githubusercontent.com/errorcalc/PowerOff/master/Release/PowerOff.exe
