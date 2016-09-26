@@ -9,6 +9,18 @@ object MainForm: TMainForm
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
+  object Label3: TLabel
+    Anchors = [akLeft, akRight, akBottom]
+    Opacity = 0.500000000000000000
+    Position.X = 8.000000000000000000
+    Position.Y = 208.000000000000000000
+    Size.Width = 488.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.HorzAlign = Trailing
+    TextSettings.VertAlign = Trailing
+    Text = 'ErrorSoft(c) 2016, get source: github.com/errorcalc/PowerOff'
+  end
   object TabControl: TTabControl
     Align = Client
     Size.Width = 504.000000000000000000
@@ -102,7 +114,7 @@ object MainForm: TMainForm
           end>
         OnResize = GridPanelLayout1Resize
         object Button1: TButton
-          Tag = 15
+          Tag = 6
           Align = Client
           StyledSettings = [Family, Style, FontColor]
           Margins.Left = 5.000000000000000000
@@ -112,7 +124,7 @@ object MainForm: TMainForm
           Size.Width = 111.000000000000000000
           Size.Height = 95.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 3
+          TabOrder = 0
           Text = '15 '#1084#1080#1085#1091#1090
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
@@ -128,7 +140,7 @@ object MainForm: TMainForm
           Size.Width = 111.000000000000000000
           Size.Height = 95.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 2
+          TabOrder = 1
           Text = '30 '#1084#1080#1085#1091#1090
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
@@ -144,7 +156,7 @@ object MainForm: TMainForm
           Size.Width = 111.000000000000000000
           Size.Height = 95.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 1
+          TabOrder = 3
           Text = '2 '#1095#1072#1089#1072
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
@@ -160,7 +172,7 @@ object MainForm: TMainForm
           Size.Width = 111.000000000000000000
           Size.Height = 95.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 0
+          TabOrder = 2
           Text = '1 '#1095#1072#1089
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
@@ -13626,26 +13638,18 @@ object MainForm: TMainForm
           6F720708636C61426C61636B0B4E6F726D616C436F6C6F720708636C61426C61
           636B0C50726573736564436F6C6F720708636C615768697465000000}
       end>
-    Left = 408
-    Top = 208
-  end
-  object Label3: TLabel
-    Anchors = [akLeft, akRight, akBottom]
-    Opacity = 0.500000000000000000
-    Position.X = 8.000000000000000000
-    Position.Y = 208.000000000000000000
-    Size.Width = 488.000000000000000000
-    Size.Height = 25.000000000000000000
-    Size.PlatformDefault = False
-    TextSettings.HorzAlign = Trailing
-    TextSettings.VertAlign = Trailing
-    Text = 'ErrorSoft(c) 2016, get source: github.com/errorcalc/PowerOff'
+    Left = 312
+    Top = 104
   end
   object Timer: TTimer
     Enabled = False
     Interval = 500
     OnTimer = TimerTimer
-    Left = 240
-    Top = 104
+    Left = 384
+    Top = 96
+  end
+  object NotificationCenter: TNotificationCenter
+    Left = 346
+    Top = 106
   end
 end

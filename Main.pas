@@ -16,7 +16,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts, FMX.TextLayout,
-  WinApi.Windows, WinApi.ShellAPI, System.Math;
+  WinApi.Windows, WinApi.ShellAPI, System.Math, System.Notification;
 
 type
   TMainForm = class(TForm)
@@ -34,6 +34,7 @@ type
     Display: TLabel;
     Timer: TTimer;
     Label3: TLabel;
+    NotificationCenter: TNotificationCenter;
     procedure GridPanelLayout1Resize(Sender: TObject);
     procedure ButtonSetClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
@@ -41,8 +42,10 @@ type
   private
     { Private declarations }
     OldTime: DWORD;
+    IsUsedNotification: Boolean;
     procedure Test;
     function PowerOff: Boolean;
+    procedure ShowNotification;
   public
     { Public declarations }
   end;
@@ -165,6 +168,20 @@ begin
   Result := ExitWindowsEx(EWX_SHUTDOWN or EWX_POWEROFF, 0);
 end;
 
+procedure TMainForm.ShowNotification;
+var
+  Notification: TNotification;
+begin
+  Notification := NotificationCenter.CreateNotification;
+  try
+    Notification.Title := 'PowerOff';
+    Notification.AlertBody := 'Внимание:'#13'Через 5 минут произойдет автоматиеское выключение компьютера';
+    NotificationCenter.PresentNotification(Notification);
+  finally
+    Notification.Free;
+  end;
+end;
+
 procedure TMainForm.Test;
 var
   s: string;
@@ -204,6 +221,12 @@ begin
     Timer.Enabled := False;
     Display.Text := 'Выключение...';
     PowerOff;
+  end;
+
+  if (Time <= 60 * 5) and not IsUsedNotification then
+  begin
+    IsUsedNotification := True;
+    ShowNotification;
   end;
 end;
 
