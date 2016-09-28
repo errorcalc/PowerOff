@@ -9,16 +9,17 @@ object MainForm: TMainForm
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
-  object Label3: TLabel
-    Anchors = [akLeft, akRight, akBottom]
+  object FooterEs: TLabel
+    Anchors = [akRight, akBottom]
     Opacity = 0.500000000000000000
-    Position.X = 8.000000000000000000
+    Position.X = 40.000000000000000000
     Position.Y = 208.000000000000000000
-    Size.Width = 488.000000000000000000
-    Size.Height = 25.000000000000000000
+    Size.Width = 459.000000000000000000
+    Size.Height = 28.000000000000000000
     Size.PlatformDefault = False
     TextSettings.HorzAlign = Trailing
     TextSettings.VertAlign = Trailing
+    TextSettings.WordWrap = False
     Text = 'ErrorSoft(c) 2016, get source: github.com/errorcalc/PowerOff'
   end
   object TabControl: TTabControl
@@ -43,7 +44,7 @@ object MainForm: TMainForm
       Text = 'TabItemSet'
       ExplicitSize.cx = 12.000000000000000000
       ExplicitSize.cy = 12.000000000000000000
-      object Label1: TLabel
+      object SetTitle: TLabel
         Align = Top
         AutoSize = True
         StyledSettings = [Family, Style, FontColor]
@@ -60,7 +61,7 @@ object MainForm: TMainForm
         TextSettings.HorzAlign = Center
         Text = #1054#1090#1082#1083#1102#1095#1080#1090#1100' '#1082#1086#1084#1087#1100#1102#1090#1077#1088' '#1095#1077#1088#1077#1079':'
       end
-      object GridPanelLayout1: TGridPanelLayout
+      object GridPanelLayout: TGridPanelLayout
         Align = Client
         Margins.Left = 10.000000000000000000
         Margins.Right = 10.000000000000000000
@@ -95,12 +96,12 @@ object MainForm: TMainForm
           end
           item
             Column = 3
-            Control = Button3
+            Control = Button4
             Row = 1
           end
           item
             Column = 2
-            Control = Button4
+            Control = Button3
             Row = 1
           end>
         RowCollection = <
@@ -113,9 +114,9 @@ object MainForm: TMainForm
           item
             Value = 20.000000000000000000
           end>
-        OnResize = GridPanelLayout1Resize
+        OnResize = GridPanelLayoutResize
         object Button1: TButton
-          Tag = 6
+          Tag = 15
           Align = Client
           StyledSettings = [Family, Style, FontColor]
           Margins.Left = 5.000000000000000000
@@ -146,7 +147,7 @@ object MainForm: TMainForm
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
         end
-        object Button3: TButton
+        object Button4: TButton
           Tag = 120
           Align = Client
           StyledSettings = [Family, Style, FontColor]
@@ -162,7 +163,7 @@ object MainForm: TMainForm
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
         end
-        object Button4: TButton
+        object Button3: TButton
           Tag = 60
           Align = Client
           StyledSettings = [Family, Style, FontColor]
@@ -192,7 +193,9 @@ object MainForm: TMainForm
       TabOrder = 0
       TabStop = False
       Text = 'TabItemRun'
-      object Label2: TLabel
+      ExplicitSize.cx = 12.000000000000000000
+      ExplicitSize.cy = 12.000000000000000000
+      object RunTitle: TLabel
         Align = Top
         AutoSize = True
         StyledSettings = [Family, Style, FontColor]
@@ -211,7 +214,7 @@ object MainForm: TMainForm
       end
       object Display: TLabel
         Align = Client
-        StyledSettings = [Family, Style, FontColor]
+        StyledSettings = [Family, Style]
         Margins.Bottom = 40.000000000000000000
         Size.Width = 504.000000000000000000
         Size.Height = 151.000000000000000000
@@ -13640,18 +13643,18 @@ object MainForm: TMainForm
           6F720708636C61426C61636B0B4E6F726D616C436F6C6F720708636C61426C61
           636B0C50726573736564436F6C6F720708636C615768697465000000}
       end>
-    Left = 312
-    Top = 104
+    Left = 424
+    Top = 40
   end
   object Timer: TTimer
     Enabled = False
     Interval = 500
     OnTimer = TimerTimer
-    Left = 384
-    Top = 96
+    Left = 352
+    Top = 40
   end
   object NotificationCenter: TNotificationCenter
-    Left = 346
-    Top = 106
+    Left = 280
+    Top = 40
   end
 end

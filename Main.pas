@@ -6,7 +6,6 @@
 { This can be useful utilite or some of the sources, such as FontSizeForBox function.    }
 {                                                                                        }
 { Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License }
-{                                                                                        }
 {****************************************************************************************}
 unit Main;
 
@@ -21,33 +20,30 @@ uses
 type
   TMainForm = class(TForm)
     StyleBook: TStyleBook;
-    Label1: TLabel;
+    SetTitle: TLabel;
     TabControl: TTabControl;
     TabItemSet: TTabItem;
-    GridPanelLayout1: TGridPanelLayout;
+    GridPanelLayout: TGridPanelLayout;
     Button1: TButton;
     Button2: TButton;
-    Button3: TButton;
     Button4: TButton;
+    Button3: TButton;
     TabItemRun: TTabItem;
-    Label2: TLabel;
+    RunTitle: TLabel;
     Display: TLabel;
     Timer: TTimer;
-    Label3: TLabel;
+    FooterEs: TLabel;
     NotificationCenter: TNotificationCenter;
-    procedure GridPanelLayout1Resize(Sender: TObject);
+    procedure GridPanelLayoutResize(Sender: TObject);
     procedure ButtonSetClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure DisplayResize(Sender: TObject);
   private
-    { Private declarations }
-    OldTime: DWORD;
+    OldTime: DWord;
     IsUsedNotification: Boolean;
     procedure Test;
     function PowerOff: Boolean;
     procedure ShowNotification;
-  public
-    { Public declarations }
   end;
 
 var
@@ -56,6 +52,18 @@ var
 implementation
 
 {$R *.fmx}
+
+const
+  sNotificationBody = 'Внимание:'+sLineBreak+'Через 5 минут произойдет автоматиеское выключение компьютера';
+  sNotificationTitle = 'PowerOff';
+  sDefaultDisplay = '00ч 00м 00с';
+  sOffText = 'Выключение...';
+  cHour = 'ч';
+  cMinute = 'м';
+  cSecond = 'с';
+  NotificationTime = 60 * 5;// 5 minutes
+  NormalDispColor = $FF000000;
+  AlarmDispColor = $FFFF0000;
 
 function CalcTextSize(Text: string; Font: TFont; Size: Single = 0): TSizeF;
 var
@@ -121,7 +129,7 @@ end;
 
 procedure TMainForm.ButtonSetClick(Sender: TObject);
 begin
-  OldTime := GetTickCount div 1000 + TControl(Sender).Tag * 60;
+  OldTime := GetTickCount div 1000 + DWord(TControl(Sender).Tag) * 60;
   Test;
 
   TabControl.SetActiveTabWithTransition(TabItemRun, TTabTransition.Slide, TTabTransitionDirection.Normal);
@@ -130,14 +138,14 @@ end;
 
 procedure TMainForm.DisplayResize(Sender: TObject);
 begin
-  Display.Font.Size := FontSizeForBox('00ч 00м 00с',
+  Display.Font.Size := FontSizeForBox(sDefaultDisplay,
     Display.Font, Display.Width, Display.Height, Display.Height);
 end;
 
-procedure TMainForm.GridPanelLayout1Resize(Sender: TObject);
-var
-  Width, Height: Integer;
-  Grid: TGridPanelLayout;
+procedure TMainForm.GridPanelLayoutResize(Sender: TObject);
+//var
+//  Width, Height: Integer;
+//  Grid: TGridPanelLayout;
 begin
 //  Grid := TGridPanelLayout(Sender);
 //  if Grid.ColumnCollection.Count <> 0 then
@@ -174,8 +182,8 @@ var
 begin
   Notification := NotificationCenter.CreateNotification;
   try
-    Notification.Title := 'PowerOff';
-    Notification.AlertBody := 'Внимание:'#13'Через 5 минут произойдет автоматиеское выключение компьютера';
+    Notification.Title := sNotificationTitle;
+    Notification.AlertBody := sNotificationBody;
     NotificationCenter.PresentNotification(Notification);
   finally
     Notification.Free;
@@ -197,7 +205,7 @@ begin
     if Time >= 60 * 60 then
     begin
       n := Time div (60 * 60);
-      s := s + n.toString + 'ч ';
+      s := s + n.toString + cHour + ' ';
     end;
 
     if Time >= 60 then
@@ -205,13 +213,13 @@ begin
       n := (Time div 60) mod 60;
       if n <= 9 then
         s := s + '0';
-      s := s + n.toString + 'м ';
+      s := s + n.toString + cMinute + ' ';
     end;
 
     n := Time mod 60;
     if n <= 9 then
       s := s + '0';
-    s := s + n.toString + 'c ';
+    s := s + n.toString + cSecond + ' ';
 
     Display.Text := s;
   end;
@@ -219,13 +227,14 @@ begin
   if Time <= 0 then
   begin
     Timer.Enabled := False;
-    Display.Text := 'Выключение...';
+    Display.Text := sOffText;
     PowerOff;
   end;
 
-  if (Time <= 60 * 5) and not IsUsedNotification then
+  if not IsUsedNotification and (Time <= NotificationTime) then
   begin
     IsUsedNotification := True;
+    Display.TextSettings.FontColor := AlarmDispColor;
     ShowNotification;
   end;
 end;
