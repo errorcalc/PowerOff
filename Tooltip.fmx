@@ -1,0 +1,77 @@
+object TooltipForm: TTooltipForm
+  Left = 0
+  Top = 0
+  ClientHeight = 119
+  ClientWidth = 862
+  Transparency = True
+  FormStyle = StayOnTop
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnClose = FormClose
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object TimerFree: TTimer
+    Enabled = False
+    Interval = 10000
+    OnTimer = TimerFreeTimer
+    Left = 144
+    Top = 16
+  end
+  object Layout: TLayout
+    Align = Client
+    Size.Width = 862.000000000000000000
+    Size.Height = 119.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Rectangle: TRectangle
+      Align = Client
+      Fill.Color = claBlack
+      Margins.Left = 30.000000000000000000
+      Margins.Top = 30.000000000000000000
+      Margins.Right = 30.000000000000000000
+      Margins.Bottom = 30.000000000000000000
+      Size.Width = 802.000000000000000000
+      Size.Height = 59.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      XRadius = 6.000000000000000000
+      YRadius = 6.000000000000000000
+      object ShadowEffect: TShadowEffect
+        Direction = 45.000000000000000000
+        Softness = 0.300000011920929000
+        Opacity = 0.699999988079071000
+        ShadowColor = claBlack
+      end
+      object Message: TLabel
+        Align = Client
+        StyledSettings = [Family, Style]
+        Size.Width = 802.000000000000000000
+        Size.Height = 59.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 30.000000000000000000
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+        TextSettings.WordWrap = False
+        TextSettings.Trimming = None
+        Text = '-'
+      end
+    end
+    object AnimationHide: TFloatAnimation
+      Delay = 4.500000000000000000
+      Duration = 0.500000000000000000
+      Interpolation = Quadratic
+      PropertyName = 'Opacity'
+      StartValue = 1.000000000000000000
+      StopValue = 0.000000000000000000
+    end
+    object AnimationShow: TFloatAnimation
+      Enabled = True
+      Duration = 0.500000000000000000
+      Interpolation = Quadratic
+      PropertyName = 'Opacity'
+      StartValue = 0.000000000000000000
+      StopValue = 1.000000000000000000
+    end
+  end
+end

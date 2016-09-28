@@ -205,8 +205,8 @@ object MainForm: TMainForm
         Margins.Bottom = 10.000000000000000000
         Position.X = 10.000000000000000000
         Position.Y = 10.000000000000000000
-        Size.Width = 484.000000000000000000
-        Size.Height = 30.000000000000000000
+        Size.Width = 30.000000000000000000
+        Size.Height = 118.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 22.000000000000000000
         TextSettings.HorzAlign = Center
@@ -216,8 +216,7 @@ object MainForm: TMainForm
         Align = Client
         StyledSettings = [Family, Style]
         Margins.Bottom = 40.000000000000000000
-        Size.Width = 504.000000000000000000
-        Size.Height = 151.000000000000000000
+        Size.Width = 50.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 84.000000000000000000
         TextSettings.HorzAlign = Center
