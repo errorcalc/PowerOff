@@ -1,3 +1,12 @@
+{****************************************************************************************}
+{                                       PowerOff                                         }
+{                                   ErrorSoft(c) 2016                                    }
+{                                                                                        }
+{ This is my first public project using FireMonkey technology.                           }
+{ This can be useful utilite or some of the sources, such as FontSizeForBox function.    }
+{                                                                                        }
+{ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License }
+{****************************************************************************************}
 unit Tooltip;
 
 interface
