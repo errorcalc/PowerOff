@@ -3,15 +3,21 @@ unit Utils;
 interface
 
 uses
-  System.Types, FMX.Types, FMX.Graphics, FMX.TextLayout, System.Math;
+  System.Types, FMX.Types, FMX.Graphics, FMX.TextLayout, System.Math, System.SysUtils;
 
 const
   cMaxFontSize = 512;
 
 function CalcTextSize(Text: string; Font: TFont; Size: Single = 0): TSizeF;
 function FontSizeForBox(Text: string; Font: TFont; Width, Height: Single; MaxFontSize: Single = cMaxFontSize): Integer;
+function SecondsToString(Seconds: Integer): string;
 
 implementation
+
+const
+  cHour = '÷';
+  cMinute = 'ì';
+  cSecond = 'ñ';
 
 function CalcTextSize(Text: string; Font: TFont; Size: Single = 0): TSizeF;
 var
@@ -70,6 +76,32 @@ begin
   until MaxIterations = 0;
 
   Result := Size;
+end;
+
+function SecondsToString(Seconds: Integer): string;
+var
+  n: Integer;
+begin
+  Result := '';
+
+  if Seconds >= 60 * 60 then
+  begin
+    n := Seconds div (60 * 60);
+    Result := Result + n.toString + cHour + ' ';
+  end;
+
+  if Seconds >= 60 then
+  begin
+    n := (Seconds div 60) mod 60;
+    if n <= 9 then
+      Result := Result + '0';
+    Result := Result + n.toString + cMinute + ' ';
+  end;
+
+  n := Seconds mod 60;
+  if n <= 9 then
+    Result := Result + '0';
+  Result := Result + n.toString + cSecond + ' ';
 end;
 
 end.

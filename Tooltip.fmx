@@ -37,7 +37,9 @@ object TooltipForm: TTooltipForm
       Stroke.Kind = None
       XRadius = 6.000000000000000000
       YRadius = 6.000000000000000000
+      OnClick = RectangleClick
       object ShadowEffect: TShadowEffect
+        Distance = 3.000000000000000000
         Direction = 45.000000000000000000
         Softness = 0.300000011920929000
         Opacity = 0.699999988079071000

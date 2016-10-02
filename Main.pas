@@ -15,7 +15,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts, FMX.TextLayout,
-  WinApi.Windows, WinApi.ShellAPI, System.Math, System.Notification;
+  WinApi.Windows, WinApi.ShellAPI, System.Math, System.Notification, FMX.Effects, FMX.Objects;
 
 type
   TMainForm = class(TForm)
@@ -34,14 +34,28 @@ type
     Timer: TTimer;
     FooterEs: TLabel;
     NotificationCenter: TNotificationCenter;
+    Button5: TSpeedButton;
+    LayoutCustomTime: TLayout;
+    CalloutPanel: TCalloutPanel;
+    TrackBarCustom: TTrackBar;
+    CustomTime: TLabel;
+    LayoutCustomButton: TLayout;
+    ButtonCustomOk: TButton;
+    LayoutCustomTimeInternalRect: TLayout;
     procedure GridPanelLayoutResize(Sender: TObject);
     procedure ButtonSetClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure DisplayResize(Sender: TObject);
+    procedure Button5Resize(Sender: TObject);
+    procedure Button5MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+      Y: Single);
+    procedure TrackBarCustomChange(Sender: TObject);
+    procedure ButtonCustomOkClick(Sender: TObject);
   private
     OldTime: DWord;
     IsUsedNotification: Boolean;
     procedure Test;
+    procedure SetTime(Time: Integer);
     function PowerOff: Boolean;
     procedure ShowNotification;
   end;
@@ -57,24 +71,55 @@ uses
   Utils, Tooltip;
 
 const
-  sNotificationBody = 'Внимание! Через 5 минут произойдет автоматиеское выключение компьютера';
+  sNotificationBody = 'Внимание! Через 5 минут произойдет автоматическое выключение компьютера';
   sNotificationTitle = 'PowerOff';
   sDefaultDisplay = '00ч 00м 00с';
   sOffText = 'Выключение...';
-  cHour = 'ч';
-  cMinute = 'м';
-  cSecond = 'с';
+  sCustomTme = 'Отключить через';
   NotificationTime = 60 * 5;// 5 minutes
   NormalDispColor = $FF000000;
   AlarmDispColor = $FFFF0000;
 
+procedure TMainForm.Button5MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Single);
+begin
+  Button1.Enabled := not Button5.IsPressed;
+  Button2.Enabled := not Button5.IsPressed;
+  Button3.Enabled := not Button5.IsPressed;
+  Button4.Enabled := not Button5.IsPressed;
+
+  TrackBarCustomChange(TrackBarCustom);
+
+  LayoutCustomTime.Position.X := Trunc(
+    TButton(Sender).LocalToAbsolute(PointF(0, 0)).X - LayoutCustomTime.Size.Width + TButton(Sender).Width);
+  LayoutCustomTime.Position.Y := Trunc(
+    TButton(Sender).LocalToAbsolute(PointF(0, 0)).Y - LayoutCustomTime.Size.Height);
+  LayoutCustomTime.Visible := Button5.IsPressed;
+end;
+
+procedure TMainForm.Button5Resize(Sender: TObject);
+begin
+  if Button5.IsPressed then
+  begin
+    LayoutCustomTime.Position.X := Trunc(
+      TButton(Sender).LocalToAbsolute(PointF(0, 0)).X - LayoutCustomTime.Size.Width + TButton(Sender).Width);
+    LayoutCustomTime.Position.Y := Trunc(
+      TButton(Sender).LocalToAbsolute(PointF(0, 0)).Y - LayoutCustomTime.Size.Height);
+  end;
+end;
+
+procedure TMainForm.ButtonCustomOkClick(Sender: TObject);
+begin
+  Button1.Enabled := True;
+  Button2.Enabled := True;
+  Button3.Enabled := True;
+  Button4.Enabled := True;
+  SetTime(Trunc(TrackBarCustom.Value) * 60);
+end;
+
 procedure TMainForm.ButtonSetClick(Sender: TObject);
 begin
-  OldTime := GetTickCount div 1000 + DWord(TControl(Sender).Tag) * 60;
-  Test;
-
-  TabControl.SetActiveTabWithTransition(TabItemRun, TTabTransition.Slide, TTabTransitionDirection.Normal);
-  Timer.Enabled := True;
+  SetTime(DWord(TControl(Sender).Tag) * 60);
 end;
 
 procedure TMainForm.DisplayResize(Sender: TObject);
@@ -117,6 +162,15 @@ begin
   Result := ExitWindowsEx(EWX_SHUTDOWN or EWX_POWEROFF, 0);
 end;
 
+procedure TMainForm.SetTime(Time: Integer);
+begin
+  OldTime := GetTickCount div 1000 + Time;
+  Test;
+
+  TabControl.SetActiveTabWithTransition(TabItemRun, TTabTransition.Slide, TTabTransitionDirection.Normal);
+  Timer.Enabled := True;
+end;
+
 procedure TMainForm.ShowNotification;
 //var
 //  Notification: TNotification;
@@ -129,43 +183,18 @@ begin
 //  finally
 //    Notification.Free;
 //  end;
-  System.SysUtils.Beep;
+  WInApi.Windows.MessageBeep(MB_ICONINFORMATION);
   ShowTooltip(sNotificationBody);
 end;
 
 procedure TMainForm.Test;
 var
-  s: string;
-  n: Integer;
   Time: Integer;
 begin
-  s := '';
-
   Time := OldTime - GetTickCount div 1000;
 
   if Time >= 0 then
-  begin
-    if Time >= 60 * 60 then
-    begin
-      n := Time div (60 * 60);
-      s := s + n.toString + cHour + ' ';
-    end;
-
-    if Time >= 60 then
-    begin
-      n := (Time div 60) mod 60;
-      if n <= 9 then
-        s := s + '0';
-      s := s + n.toString + cMinute + ' ';
-    end;
-
-    n := Time mod 60;
-    if n <= 9 then
-      s := s + '0';
-    s := s + n.toString + cSecond + ' ';
-
-    Display.Text := s;
-  end;
+    Display.Text := SecondsToString(Time);
 
   if Time <= 0 then
   begin
@@ -185,6 +214,11 @@ end;
 procedure TMainForm.TimerTimer(Sender: TObject);
 begin
   Test;
+end;
+
+procedure TMainForm.TrackBarCustomChange(Sender: TObject);
+begin
+  CustomTime.Text := sCustomTme + ': ' + SecondsToString(Trunc(TTrackBar(Sender).Value) * 60);
 end;
 
 end.

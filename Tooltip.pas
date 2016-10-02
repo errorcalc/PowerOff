@@ -19,6 +19,7 @@ type
     procedure TimerFreeTimer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure RectangleClick(Sender: TObject);
   private
     FTextMessage: string;
   public
@@ -66,6 +67,11 @@ begin
 
   SetBounds(Screen.Width div 2 - Size.Width div 2, Screen.Height div 2 - Size.Height div 2,
     Size.Width, Size.Height);
+end;
+
+procedure TTooltipForm.RectangleClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TTooltipForm.TimerFreeTimer(Sender: TObject);
