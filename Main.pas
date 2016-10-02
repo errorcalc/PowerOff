@@ -15,7 +15,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts, FMX.TextLayout,
-  WinApi.Windows, WinApi.ShellAPI, System.Math, System.Notification, FMX.Effects, FMX.Objects;
+  WinApi.Windows, WinApi.ShellAPI, System.Math, System.Notification, FMX.Effects, FMX.Objects,
+  FMX.Ani;
 
 type
   TMainForm = class(TForm)
@@ -32,9 +33,8 @@ type
     RunTitle: TLabel;
     Display: TLabel;
     Timer: TTimer;
-    FooterEs: TLabel;
     NotificationCenter: TNotificationCenter;
-    Button5: TSpeedButton;
+    Button5: TButton;
     LayoutCustomTime: TLayout;
     CalloutPanel: TCalloutPanel;
     TrackBarCustom: TTrackBar;
@@ -42,6 +42,11 @@ type
     LayoutCustomButton: TLayout;
     ButtonCustomOk: TButton;
     LayoutCustomTimeInternalRect: TLayout;
+    FooterEsLayout: TLayout;
+    FooterEs: TLabel;
+    FooterEsColorAnimation: TColorAnimation;
+    BackButton: TButton;
+    Back_Image: TImage;
     procedure GridPanelLayoutResize(Sender: TObject);
     procedure ButtonSetClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
@@ -51,6 +56,9 @@ type
       Y: Single);
     procedure TrackBarCustomChange(Sender: TObject);
     procedure ButtonCustomOkClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FooterEsClick(Sender: TObject);
+    procedure BackButtonClick(Sender: TObject);
   private
     OldTime: DWord;
     IsUsedNotification: Boolean;
@@ -80,6 +88,13 @@ const
   NormalDispColor = $FF000000;
   AlarmDispColor = $FFFF0000;
 
+procedure TMainForm.BackButtonClick(Sender: TObject);
+begin
+  Timer.Enabled := False;
+  TabControl.SetActiveTabWithTransition(TabItemSet, TTabTransition.Slide, TTabTransitionDirection.Reversed);
+  Button5Resize(Button5);
+end;
+
 procedure TMainForm.Button5MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X,
   Y: Single);
 begin
@@ -99,7 +114,7 @@ end;
 
 procedure TMainForm.Button5Resize(Sender: TObject);
 begin
-  if Button5.IsPressed then
+  if TButton(Sender).IsPressed and not Timer.Enabled then
   begin
     LayoutCustomTime.Position.X := Trunc(
       TButton(Sender).LocalToAbsolute(PointF(0, 0)).X - LayoutCustomTime.Size.Width + TButton(Sender).Width);
@@ -110,10 +125,10 @@ end;
 
 procedure TMainForm.ButtonCustomOkClick(Sender: TObject);
 begin
-  Button1.Enabled := True;
-  Button2.Enabled := True;
-  Button3.Enabled := True;
-  Button4.Enabled := True;
+//  Button1.Enabled := True;
+//  Button2.Enabled := True;
+//  Button3.Enabled := True;
+//  Button4.Enabled := True;
   SetTime(Trunc(TrackBarCustom.Value) * 60);
 end;
 
@@ -126,6 +141,16 @@ procedure TMainForm.DisplayResize(Sender: TObject);
 begin
   Display.Font.Size := FontSizeForBox(sDefaultDisplay,
     Display.Font, Display.Width, Display.Height, Display.Height);
+end;
+
+procedure TMainForm.FooterEsClick(Sender: TObject);
+begin
+  ShellExecute(0, 'open', PChar('https://github.com/errorcalc/PowerOff'), nil, nil, 0);
+end;
+
+procedure TMainForm.FormCreate(Sender: TObject);
+begin
+  FooterEsLayout.BringToFront;// for link
 end;
 
 procedure TMainForm.GridPanelLayoutResize(Sender: TObject);
@@ -164,6 +189,8 @@ end;
 
 procedure TMainForm.SetTime(Time: Integer);
 begin
+  Display.TextSettings.FontColor := NormalDispColor;
+  IsUsedNotification := False;
   OldTime := GetTickCount div 1000 + Time;
   Test;
 
