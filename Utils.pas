@@ -12,14 +12,19 @@ unit Utils;
 interface
 
 uses
-  System.Types, FMX.Types, FMX.Graphics, FMX.TextLayout, System.Math, System.SysUtils;
+  System.Types, FMX.Types, FMX.Graphics, FMX.TextLayout, System.Math, System.SysUtils, FMX.Controls, System.UITypes,
+  FMX.StdCtrls;
 
 const
   cMaxFontSize = 512;
+type
+  TLineKind = (Up, Down, Left, Right, Both);
 
 function CalcTextSize(Text: string; Font: TFont; Size: Single = 0): TSizeF;
 function FontSizeForBox(Text: string; Font: TFont; Width, Height: Single; MaxFontSize: Single = cMaxFontSize): Integer;
 function SecondsToString(Seconds: Integer): string;
+procedure DrawTick(Control: TTrackBar; Offset: Single; PageSize: Single; DrawBounds: Boolean;
+  LineKind: TLineKind; LineWidth, LineSpace: Single; Color: TAlphaColor);
 
 implementation
 
@@ -111,6 +116,107 @@ begin
   if n <= 9 then
     Result := Result + '0';
   Result := Result + n.toString + cSecond + ' ';
+end;
+
+type
+  THTrackBar = class(TTrackBar) end;
+
+procedure DrawTick(Control: TTrackBar; Offset: Single; PageSize: Single; DrawBounds: Boolean;
+  LineKind: TLineKind; LineWidth, LineSpace: Single; Color: TAlphaColor);
+var
+  Obj: TFmxObject;
+  Cnt: TControl;
+  L: TPointF;
+  Coord, RealCoord: Single;
+
+  function GetCoord(Value: Single): Single;
+  // var
+  //   Crutch: Integer;
+  begin
+    // Crutch := IfThen(SameValue(Value, Control.Min) or SameValue(Value, Control.Max), 0, 0);
+    if Control.Orientation = TOrientation.Horizontal then
+      Result := Ceil(THTrackBar(Control).GetThumbRect(Value).CenterPoint.X)//  + Crutch
+    else
+      Result := Ceil(THTrackBar(Control).GetThumbRect(Value).CenterPoint.Y);//  + Crutch;
+  end;
+
+  procedure DrawLine(Coord: Single);
+  begin
+    if Control.Orientation = TOrientation.Horizontal then
+    begin
+      if (SameValue(LineSpace, 0)) and (LineKind = TLineKind.Both) then
+      begin
+        Control.Canvas.DrawLine(
+          PointF(Coord + 0.5, L.Y + Trunc(Cnt.Height / 2) - LineWidth + 0.5),
+          PointF(Coord + 0.5, L.Y + Trunc(Cnt.Height / 2) + LineWidth - 0.5), 1)
+      end else
+      begin
+        if (LineKind = TLineKind.Down) or (LineKind = TLineKind.Both) then
+          Control.Canvas.DrawLine(
+            PointF(Coord + 0.5, L.Y + Trunc(Cnt.Height / 2) + LineSpace + 0.5),
+            PointF(Coord + 0.5, L.Y + Trunc(Cnt.Height / 2) + LineSpace + LineWidth - 0.5), 1);
+        if (LineKind = TLineKind.Up) or (LineKind = TLineKind.Both) then
+          Control.Canvas.DrawLine(
+            PointF(Coord + 0.5, L.Y + Trunc(Cnt.Height / 2) - LineSpace - 0.5),
+            PointF(Coord + 0.5, L.Y + Trunc(Cnt.Height / 2) - LineSpace - LineWidth + 0.5), 1);
+      end;
+    end else
+    begin
+      if (SameValue(LineSpace, 0)) and (LineKind = TLineKind.Both) then
+      begin
+        Control.Canvas.DrawLine(
+          PointF(L.X + Trunc(Cnt.Width / 2) - LineWidth + 0.5, Coord + 0.5),
+          PointF(L.X + Trunc(Cnt.Width / 2) + LineWidth - 0.5, Coord + 0.5), 1)
+      end else
+      begin
+        if (LineKind = TLineKind.Right) or (LineKind = TLineKind.Both) then
+          Control.Canvas.DrawLine(
+            PointF(L.X + Trunc(Cnt.Width / 2) + LineWidth + 0.5, Coord + 0.5),
+            PointF(L.X + Trunc(Cnt.Width / 2) + LineWidth + LineWidth - 0.5, Coord + 0.5), 1);
+        if (LineKind = TLineKind.Left) or (LineKind = TLineKind.Both) then
+          Control.Canvas.DrawLine(
+            PointF(L.X + Trunc(Cnt.Width / 2) - LineWidth - 0.5, Coord + 0.5),
+            PointF(L.X + Trunc(Cnt.Width / 2) - LineWidth - LineWidth + 0.5, Coord + 0.5), 1);
+      end;
+    end;
+  end;
+
+begin
+  if Control.Orientation = TOrientation.Horizontal then
+    Obj := Control.FindStyleResource('htrack')
+  else
+    Obj := Control.FindStyleResource('vtrack');
+
+  if Obj = nil then
+    Exit;
+
+  Cnt := Obj.FindStyleResource('background') as TControl;
+  if Cnt = nil then
+    Exit;
+
+  Control.Canvas.Stroke.Thickness := 1;
+  Control.Canvas.Stroke.Kind := TBrushKind.Solid;
+  Control.Canvas.Stroke.Color := Color;
+
+//  if Control.Orientation = TOrientation.Horizontal then
+//  begin
+  L := Cnt.LocalToAbsolute(PointF(0, 0)) - Control.LocalToAbsolute(PointF(0, 0));
+  if DrawBounds and not SameValue(Offset, 0.0) then
+    DrawLine(GetCoord(Control.Min));
+
+  Coord := Offset + Control.Min;
+  while Coord <= Control.Max - Control.Min do
+  begin
+    if (Coord >= Control.Min) and (Coord <= Control.Max) then
+    begin
+      RealCoord := GetCoord(Coord);
+      DrawLine(RealCoord);
+    end;
+    Coord := Coord + PageSize;
+  end;
+
+  if DrawBounds and not SameValue(GetCoord(Control.Max), GetCoord(Coord - PageSize)) then
+    DrawLine(GetCoord(Control.Max));
 end;
 
 end.

@@ -59,6 +59,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FooterEsClick(Sender: TObject);
     procedure BackButtonClick(Sender: TObject);
+    procedure TrackBarCustomPainting(Sender: TObject; Canvas: TCanvas; const [Ref] ARect: TRectF);
   private
     OldTime: DWord;
     IsUsedNotification: Boolean;
@@ -210,7 +211,7 @@ begin
 //  finally
 //    Notification.Free;
 //  end;
-  WInApi.Windows.MessageBeep(MB_ICONINFORMATION);
+  WinApi.Windows.MessageBeep(MB_ICONINFORMATION);
   ShowTooltip(sNotificationBody);
 end;
 
@@ -246,6 +247,11 @@ end;
 procedure TMainForm.TrackBarCustomChange(Sender: TObject);
 begin
   CustomTime.Text := sCustomTme + ': ' + SecondsToString(Trunc(TTrackBar(Sender).Value) * 60);
+end;
+
+procedure TMainForm.TrackBarCustomPainting(Sender: TObject; Canvas: TCanvas; const [Ref] ARect: TRectF);
+begin
+  DrawTick(TTrackBar(Sender), 25, 30, True, TLineKind.Both, 6, 8, $66000000);
 end;
 
 end.
