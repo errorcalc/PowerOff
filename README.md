@@ -1,7 +1,7 @@
 # PowerOff
 ![Logo](cfx/screenshot.png)
 
-**ENG**
+**ENG**  
 PowerOff - Very simple application for auto shutdown the computer.
 
 It is useful app, if you before sleep like watch videos on YouTube/music/TV shows/movies, but they continue playing all night, causing a headache in the morning ...
@@ -11,7 +11,7 @@ Utility was written, to check the suitability of the FireMonkey technology to de
 # Download PowerOff app:
 https://raw.githubusercontent.com/errorcalc/PowerOff/master/Release/PowerOff.exe
 
-**RUS**
+**RUS**  
 PowerOff - максимально упрощенное приложение для автоотключения компьютера.
 
 Полезно если вы перед сном любите включать ролики на YouTube/музыку/сериалы/фильмы, но засыпаете и они продолжают играть всю ночь, вызывая на утро головную боль...
