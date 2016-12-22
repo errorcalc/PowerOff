@@ -20,6 +20,7 @@ const
 type
   TLineKind = (Up, Down, Left, Right, Both);
 
+function IsRu: Boolean;
 function CalcTextSize(Text: string; Font: TFont; Size: Single = 0): TSizeF;
 function FontSizeForBox(Text: string; Font: TFont; Width, Height: Single; MaxFontSize: Single = cMaxFontSize): Integer;
 function SecondsToString(Seconds: Integer): string;
@@ -28,10 +29,25 @@ procedure DrawTick(Control: TTrackBar; Offset: Single; PageSize: Single; DrawBou
 
 implementation
 
-const
-  cHour = '÷';
-  cMinute = 'ì';
-  cSecond = 'ñ';
+function IsRu: Boolean;
+begin
+  Result := PreferredUILanguages.ToLower.IndexOf('ru') <> -1;
+end;
+
+function cHour: Char;
+begin
+  if IsRu then Result := '÷' else Result := 'h';
+end;
+
+function cMinute: Char;
+begin
+  if IsRu then Result := 'ì' else Result := 'm';
+end;
+
+function cSecond: Char;
+begin
+  if IsRu then Result := 'ñ' else Result := 's';
+end;
 
 function CalcTextSize(Text: string; Font: TFont; Size: Single = 0): TSizeF;
 var

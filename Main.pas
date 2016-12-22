@@ -15,7 +15,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.TabControl,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts, FMX.TextLayout,
-  WinApi.Windows, WinApi.ShellAPI, System.Math, System.Notification, FMX.Effects, FMX.Objects,
+  WinApi.Windows, WinApi.ShellAPI, System.Math, FMX.Effects, FMX.Objects,
   FMX.Ani;
 
 type
@@ -33,7 +33,6 @@ type
     RunTitle: TLabel;
     Display: TLabel;
     Timer: TTimer;
-    NotificationCenter: TNotificationCenter;
     Button5: TButton;
     LayoutCustomTime: TLayout;
     CalloutPanel: TCalloutPanel;
@@ -80,14 +79,50 @@ uses
   Utils, Tooltip;
 
 const
-  sNotificationBody = 'Внимание! Через 5 минут произойдет автоматическое выключение компьютера';
+  sNotificationBodyRu = 'Внимание! Через 5 минут произойдет автоматическое выключение компьютера';
+  sNotificationBodyEn = 'Warning! After 5 minutes will automatically shutdown the computer';
   sNotificationTitle = 'PowerOff';
-  sDefaultDisplay = '00ч 00м 00с';
-  sOffText = 'Выключение...';
-  sCustomTme = 'Отключить через';
+  sDefaultDisplayRu = '00ч 00м 00с';
+  sDefaultDisplayEn = '00h 00m 00s';
+  sOffTextRu = 'Выключение...';
+  sOffTextEn = 'Power off...';
+  sCustomTmeRu = 'Отключить через';
+  sCustomTmeEn = 'Shutdown in';
   NotificationTime = 60 * 5;// 5 minutes
   NormalDispColor = $FF000000;
   AlarmDispColor = $FFFF0000;
+
+function sNotificationBody: string;
+begin
+  if IsRu then
+    Result := sNotificationBodyRu
+  else
+    Result := sNotificationBodyEn;
+end;
+
+function sDefaultDisplay: string;
+begin
+  if IsRu then
+    Result := sDefaultDisplayRu
+  else
+    Result := sDefaultDisplayEn;
+end;
+
+function sOffText: string;
+begin
+  if IsRu then
+    Result := sOffTextRu
+  else
+    Result := sOffTextEn;
+end;
+
+function sCustomTme: string;
+begin
+  if IsRu then
+    Result := sCustomTmeRu
+  else
+    Result := sCustomTmeEn;
+end;
 
 procedure TMainForm.BackButtonClick(Sender: TObject);
 begin
@@ -152,6 +187,17 @@ end;
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FooterEsLayout.BringToFront;// for link
+  // TLang component is not working in Seattle :(
+  if IsRu then
+  begin
+    SetTitle.Text := 'Отключить компьютер через:';
+    Button1.Text := '15 минут';
+    Button2.Text := '30 минут';
+    Button3.Text := '1 час';
+    Button4.Text := '2 часа';
+    Button5.Text := 'Настроить...';
+    RunTitle.Text := 'До выключения компьютера осталось:';
+  end;
 end;
 
 procedure TMainForm.GridPanelLayoutResize(Sender: TObject);

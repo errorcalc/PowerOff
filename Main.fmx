@@ -81,7 +81,7 @@ object MainForm: TMainForm
         Size.PlatformDefault = False
         TextSettings.Font.Size = 22.000000000000000000
         TextSettings.HorzAlign = Center
-        Text = #1054#1090#1082#1083#1102#1095#1080#1090#1100' '#1082#1086#1084#1087#1100#1102#1090#1077#1088' '#1095#1077#1088#1077#1079':'
+        Text = 'Shutdown computer in:'
       end
       object GridPanelLayout: TGridPanelLayout
         Align = Client
@@ -154,7 +154,7 @@ object MainForm: TMainForm
           Size.Height = 86.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          Text = '15 '#1084#1080#1085#1091#1090
+          Text = '15 minutes'
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
         end
@@ -170,7 +170,7 @@ object MainForm: TMainForm
           Size.Height = 86.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
-          Text = '30 '#1084#1080#1085#1091#1090
+          Text = '30 minutes'
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
         end
@@ -186,7 +186,7 @@ object MainForm: TMainForm
           Size.Height = 86.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 4
-          Text = '2 '#1095#1072#1089#1072
+          Text = '2 hour'
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
         end
@@ -202,7 +202,7 @@ object MainForm: TMainForm
           Size.Height = 86.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
-          Text = '1 '#1095#1072#1089
+          Text = '1 hour'
           TextSettings.Font.Size = 20.000000000000000000
           OnClick = ButtonSetClick
         end
@@ -219,7 +219,7 @@ object MainForm: TMainForm
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'speedbuttonstyle_mem'
-          Text = #1053#1072#1089#1090#1088#1086#1080#1090#1100'...'
+          Text = 'Custom...'
           TextSettings.Font.Size = 15.000000000000000000
           OnMouseUp = Button5MouseUp
           OnResize = Button5Resize
@@ -286,7 +286,7 @@ object MainForm: TMainForm
               Size.PlatformDefault = False
               TextSettings.Font.Size = 22.000000000000000000
               TextSettings.HorzAlign = Center
-              Text = #1054#1090#1082#1083#1102#1095#1080#1090#1100' '#1095#1077#1088#1077#1079': 180 '#1084#1080#1085#1091#1090
+              Text = 'Shutdown computer in: 180 '#1084#1080#1085#1091#1090
             end
             object TrackBarCustom: TTrackBar
               Align = VertCenter
@@ -326,7 +326,8 @@ object MainForm: TMainForm
         Align = Client
         StyledSettings = [Family, Style]
         Margins.Bottom = 40.000000000000000000
-        Size.Width = 50.000000000000000000
+        Size.Width = 504.000000000000000000
+        Size.Height = 148.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 84.000000000000000000
         TextSettings.HorzAlign = Center
@@ -343,17 +344,18 @@ object MainForm: TMainForm
         Margins.Bottom = 10.000000000000000000
         Position.X = 40.000000000000000000
         Position.Y = 10.000000000000000000
+        Size.Width = 454.000000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 22.000000000000000000
         TextSettings.HorzAlign = Center
-        Text = #1044#1086' '#1074#1099#1082#1083#1102#1095#1077#1085#1080#1103' '#1082#1086#1084#1087#1100#1102#1090#1077#1088#1072' '#1086#1089#1090#1072#1083#1086#1089#1100':'
+        Text = 'Until shutdown the computer remains:'
         object BackButton: TButton
           Anchors = [akLeft, akTop, akBottom]
           Position.X = -35.000000000000000000
           Position.Y = -5.000000000000000000
           Size.Width = 34.000000000000000000
-          Size.Height = 40.000000000000000000
+          Size.Height = 38.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'speedbuttonstyle_mem'
           TabOrder = 0
@@ -375,7 +377,7 @@ object MainForm: TMainForm
             Align = Client
             HitTest = False
             Size.Width = 34.000000000000000000
-            Size.Height = 40.000000000000000000
+            Size.Height = 38.000000000000000000
             Size.PlatformDefault = False
             WrapMode = Center
           end
@@ -13803,18 +13805,14 @@ object MainForm: TMainForm
           636B0B4E6F726D616C436F6C6F720708636C61426C61636B0C50726573736564
           436F6C6F720708636C615768697465000000}
       end>
-    Left = 72
+    Left = 40
     Top = 8
   end
   object Timer: TTimer
     Enabled = False
     Interval = 500
     OnTimer = TimerTimer
-    Left = 40
-    Top = 8
-  end
-  object NotificationCenter: TNotificationCenter
-    Left = 8
-    Top = 8
+    Left = 80
+    Top = 24
   end
 end
