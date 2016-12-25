@@ -8,6 +8,8 @@ It is useful app, if you before sleep like watch videos on YouTube/music/TV show
 
 Utility was written, to check the suitability of the FireMonkey technology to develop - in general - yes, at the moment, under Windows (and to simulate the interface UWP), it is a workable technology.
 
+Project has MIT license.
+
 # Download PowerOff app:
 https://raw.githubusercontent.com/errorcalc/PowerOff/master/Release/PowerOff.exe
 
@@ -19,6 +21,8 @@ PowerOff - максимально упрощенное приложение дл
 По большому счету утилита была написана и с целью проверить пригодность технологии FireMonkey для разработки - в целом - да, на данный момент, под Windows (и для имитирования UWP интерфейса), это вполне работоспособная технология.
 
 Хотя и есть нюансы - если вам необходимы FMX компоненты или дизайн интерфейса, учитывающие эти нюансы - вы можете заказать разработку.
+
+Проект имеет MIT лицензию.
 
 # Скачать приложение PowerOff:
 https://raw.githubusercontent.com/errorcalc/PowerOff/master/Release/PowerOff.exe
