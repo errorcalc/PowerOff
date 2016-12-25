@@ -141,7 +141,6 @@ object MainForm: TMainForm
           item
             Value = 25.000000000000000000
           end>
-        OnResize = GridPanelLayoutResize
         object Button1: TButton
           Tag = 15
           Align = Client
@@ -326,8 +325,7 @@ object MainForm: TMainForm
         Align = Client
         StyledSettings = [Family, Style]
         Margins.Bottom = 40.000000000000000000
-        Size.Width = 504.000000000000000000
-        Size.Height = 148.000000000000000000
+        Size.Width = 50.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 84.000000000000000000
         TextSettings.HorzAlign = Center
@@ -344,7 +342,6 @@ object MainForm: TMainForm
         Margins.Bottom = 10.000000000000000000
         Position.X = 40.000000000000000000
         Position.Y = 10.000000000000000000
-        Size.Width = 454.000000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 22.000000000000000000

@@ -2,11 +2,36 @@
 {                                       PowerOff                                         }
 {                                   ErrorSoft(c) 2016                                    }
 {                                                                                        }
-{ This is my first public project using FireMonkey technology.                           }
+{ Utility was written, to check the suitability of the FireMonkey technology to develop- }
+{ in general - yes, at the moment, under Windows (and to simulate the interface UWP),    }
+{ it is a workable technology.                                                           }
+{                                                                                        }
 { This can be useful utilite or some of the sources, such as FontSizeForBox function.    }
 {                                                                                        }
-{ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License }
+{ PowerOff - Very simple application for auto shutdown the computer.                     }
+{ It is useful app, if you before sleep like watch videos on                             }
+{ YouTube/music/TV shows/movies, but they continue playing all night, causing a headache }
+{ in the morning ...                                                                     }
+{                                                                                        }
+{ This project uses MIT license:                                                         }
+{ -------------------------------------------------------------------------------------- }
+{ Copyright (c) 2016 errorsoft                                                           }
+{ Permission is hereby granted, free of charge, to any person obtaining a copy of this   }
+{ software and associated documentation files (the "Software"), to deal in the Software  }
+{ without restriction, including without limitation the rights to use, copy, modify,     }
+{ merge, publish, distribute, sublicense, and/or sell copies of the Software, and to     }
+{ permit persons to whom the Software is furnished to do so, subject to the following    }
+{ conditions:                                                                            }
+{ The above copyright notice and this permission notice shall be included in all copies  }
+{ or substantial portions of the Software.                                               }
+{ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    }
+{ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR            }
+{ A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT   }
+{ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF   }
+{ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE   }
+{ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          }
 {****************************************************************************************}
+
 unit Utils;
 
 interface
@@ -24,7 +49,7 @@ function IsRu: Boolean;
 function CalcTextSize(Text: string; Font: TFont; Size: Single = 0): TSizeF;
 function FontSizeForBox(Text: string; Font: TFont; Width, Height: Single; MaxFontSize: Single = cMaxFontSize): Integer;
 function SecondsToString(Seconds: Integer): string;
-procedure DrawTick(Control: TTrackBar; Offset: Single; PageSize: Single; DrawBounds: Boolean;
+procedure DrawTicks(Control: TTrackBar; Offset: Single; PageSize: Single; DrawBounds: Boolean;
   LineKind: TLineKind; LineWidth, LineSpace: Single; Color: TAlphaColor);
 
 implementation
@@ -137,7 +162,7 @@ end;
 type
   THTrackBar = class(TTrackBar) end;
 
-procedure DrawTick(Control: TTrackBar; Offset: Single; PageSize: Single; DrawBounds: Boolean;
+procedure DrawTicks(Control: TTrackBar; Offset: Single; PageSize: Single; DrawBounds: Boolean;
   LineKind: TLineKind; LineWidth, LineSpace: Single; Color: TAlphaColor);
 var
   Obj: TFmxObject;
@@ -146,10 +171,7 @@ var
   Coord, RealCoord: Single;
 
   function GetCoord(Value: Single): Single;
-  // var
-  //   Crutch: Integer;
   begin
-    // Crutch := IfThen(SameValue(Value, Control.Min) or SameValue(Value, Control.Max), 0, 0);
     if Control.Orientation = TOrientation.Horizontal then
       Result := Ceil(THTrackBar(Control).GetThumbRect(Value).CenterPoint.X)//  + Crutch
     else
@@ -214,8 +236,6 @@ begin
   Control.Canvas.Stroke.Kind := TBrushKind.Solid;
   Control.Canvas.Stroke.Color := Color;
 
-//  if Control.Orientation = TOrientation.Horizontal then
-//  begin
   L := Cnt.LocalToAbsolute(PointF(0, 0)) - Control.LocalToAbsolute(PointF(0, 0));
   if DrawBounds and not SameValue(Offset, 0.0) then
     DrawLine(GetCoord(Control.Min));

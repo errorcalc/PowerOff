@@ -2,10 +2,34 @@
 {                                       PowerOff                                         }
 {                                   ErrorSoft(c) 2016                                    }
 {                                                                                        }
-{ This is my first public project using FireMonkey technology.                           }
+{ Utility was written, to check the suitability of the FireMonkey technology to develop- }
+{ in general - yes, at the moment, under Windows (and to simulate the interface UWP),    }
+{ it is a workable technology.                                                           }
+{                                                                                        }
 { This can be useful utilite or some of the sources, such as FontSizeForBox function.    }
 {                                                                                        }
-{ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License }
+{ PowerOff - Very simple application for auto shutdown the computer.                     }
+{ It is useful app, if you before sleep like watch videos on                             }
+{ YouTube/music/TV shows/movies, but they continue playing all night, causing a headache }
+{ in the morning ...                                                                     }
+{                                                                                        }
+{ This project uses MIT license:                                                         }
+{ -------------------------------------------------------------------------------------- }
+{ Copyright (c) 2016 errorsoft                                                           }
+{ Permission is hereby granted, free of charge, to any person obtaining a copy of this   }
+{ software and associated documentation files (the "Software"), to deal in the Software  }
+{ without restriction, including without limitation the rights to use, copy, modify,     }
+{ merge, publish, distribute, sublicense, and/or sell copies of the Software, and to     }
+{ permit persons to whom the Software is furnished to do so, subject to the following    }
+{ conditions:                                                                            }
+{ The above copyright notice and this permission notice shall be included in all copies  }
+{ or substantial portions of the Software.                                               }
+{ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,    }
+{ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR            }
+{ A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT   }
+{ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF   }
+{ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE   }
+{ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                          }
 {****************************************************************************************}
 unit Tooltip;
 
