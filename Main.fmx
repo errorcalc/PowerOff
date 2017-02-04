@@ -325,7 +325,8 @@ object MainForm: TMainForm
         Align = Client
         StyledSettings = [Family, Style]
         Margins.Bottom = 40.000000000000000000
-        Size.Width = 50.000000000000000000
+        Size.Width = 504.000000000000000000
+        Size.Height = 148.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 84.000000000000000000
         TextSettings.HorzAlign = Center
@@ -336,47 +337,58 @@ object MainForm: TMainForm
         Align = Top
         AutoSize = True
         StyledSettings = [Family, Style, FontColor]
+        Padding.Left = -34.000000000000000000
+        Padding.Top = -4.000000000000000000
+        Padding.Bottom = -4.000000000000000000
         Margins.Left = 40.000000000000000000
         Margins.Top = 10.000000000000000000
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 10.000000000000000000
         Position.X = 40.000000000000000000
         Position.Y = 10.000000000000000000
+        Size.Width = 454.000000000000000000
         Size.Height = 30.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 22.000000000000000000
         TextSettings.HorzAlign = Center
         Text = 'Until shutdown the computer remains:'
-        object BackButton: TButton
-          Anchors = [akLeft, akTop, akBottom]
-          Position.X = -35.000000000000000000
-          Position.Y = -5.000000000000000000
+        object LayoutBackButton: TLayout
+          Align = Left
+          Position.X = -34.000000000000000000
+          Position.Y = -4.000000000000000000
           Size.Width = 34.000000000000000000
           Size.Height = 38.000000000000000000
           Size.PlatformDefault = False
-          StyleLookup = 'speedbuttonstyle_mem'
-          TabOrder = 0
-          OnClick = BackButtonClick
-          object Back_Image: TImage
-            MultiResBitmap = <
-              item
-                Width = 24
-                Height = 24
-                PNG = {
-                  89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
-                  F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-                  007649444154484BED914B0E80200C44D193F7E64A0924A89436CE4437BC0D34
-                  990F9FB4F0D8EAEA222247DD16F21CF286446FC3155788842B53311AAE980646
-                  B83234B1C295879119AE5CCCF7708476B0BD4C1966784F5F003D85C5B77FD060
-                  96984656C9D4C428710D6849488C948485E84D167F91D209D73E401429B69D24
-                  0000000049454E44AE426082}
-              end>
+          TabOrder = 1
+          object BackButton: TButton
             Align = Client
-            HitTest = False
             Size.Width = 34.000000000000000000
             Size.Height = 38.000000000000000000
             Size.PlatformDefault = False
-            WrapMode = Center
+            StyleLookup = 'speedbuttonstyle_mem'
+            TabOrder = 0
+            OnClick = BackButtonClick
+            object Back_Image: TImage
+              MultiResBitmap = <
+                item
+                  Width = 24
+                  Height = 24
+                  PNG = {
+                    89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+                    F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                    007649444154484BED914B0E80200C44D193F7E64A0924A89436CE4437BC0D34
+                    990F9FB4F0D8EAEA222247DD16F21CF286446FC3155788842B53311AAE980646
+                    B83234B1C295879119AE5CCCF7708476B0BD4C1966784F5F003D85C5B77FD060
+                    96984656C9D4C428710D6849488C948485E84D167F91D209D73E401429B69D24
+                    0000000049454E44AE426082}
+                end>
+              Align = Client
+              HitTest = False
+              Size.Width = 34.000000000000000000
+              Size.Height = 38.000000000000000000
+              Size.PlatformDefault = False
+              WrapMode = Center
+            end
           end
         end
       end
@@ -13802,14 +13814,14 @@ object MainForm: TMainForm
           636B0B4E6F726D616C436F6C6F720708636C61426C61636B0C50726573736564
           436F6C6F720708636C615768697465000000}
       end>
-    Left = 40
-    Top = 8
+    Left = 80
+    Top = 56
   end
   object Timer: TTimer
     Enabled = False
     Interval = 500
     OnTimer = TimerTimer
-    Left = 80
-    Top = 24
+    Left = 40
+    Top = 56
   end
 end

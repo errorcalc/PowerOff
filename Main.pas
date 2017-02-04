@@ -70,6 +70,7 @@ type
     FooterEsColorAnimation: TColorAnimation;
     BackButton: TButton;
     Back_Image: TImage;
+    LayoutBackButton: TLayout;
     procedure ButtonSetClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure DisplayResize(Sender: TObject);
@@ -98,8 +99,10 @@ implementation
 
 {$R *.fmx}
 
+{$I 'Config.inc'}
+
 uses
-  Utils, Tooltip;
+  Utils, Tooltip{$ifdef AutoUpdate}, TurboUpdate.Check, TurboUpdate.Types, TurboUpdate.UpdateFMX{$endif};
 
 const
   sNotificationBodyRu = 'Внимание! Через 5 минут произойдет автоматическое выключение компьютера';
@@ -204,8 +207,15 @@ begin
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
+{$ifdef AutoUpdate}
+const
+  Urls: TStringArray = ['https://raw.githubusercontent.com/errorcalc/PowerOff/master/Update.ini', 'https://errorsoft.org/software/update.ini'];
+  Name = 'ErrorSoft.PowerOff';
+{$endif}
 begin
   FooterEsLayout.BringToFront;// for link
+
+  // Apply rus lang to UI
   if IsRu then
   begin
     SetTitle.Text := 'Отключить компьютер через:';
@@ -216,6 +226,25 @@ begin
     Button5.Text := 'Настроить...';
     RunTitle.Text := 'До выключения компьютера осталось:';
   end;
+
+  // AutoUpdate
+  {$ifdef AutoUpdate}
+  TurboUpdate.Check.CheckUpdate(
+    Urls,
+    Name,
+    procedure (UpdateAviable: Boolean; Version: TFileVersion)
+    var
+      Info: TUpdateInfo;
+    begin
+      if UpdateAviable then
+      begin
+        Info := Default(TUpdateInfo);
+        Info.Urls := Urls;
+        Info.Description := 'PowerOff Update';
+        TurboUpdate.UpdateFMX.Update(Info);
+      end;
+    end);
+  {$endif}
 end;
 
 function TMainForm.PowerOff: Boolean;
