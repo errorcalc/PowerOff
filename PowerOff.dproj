@@ -105,9 +105,9 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=ErrorSoft(c);FileDescription=PowerOff;FileVersion=2.2.0.12;InternalName=PowerOff;LegalCopyright=ErrorSoft(c);LegalTrademarks=;OriginalFilename=;ProductName=PowerOff;ProductVersion=2.0;Comments=;ProgramID=com.embarcadero.$(ModuleName)</VerInfo_Keys>
-        <VerInfo_Build>12</VerInfo_Build>
+        <VerInfo_MinorVer>3</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=ErrorSoft(c);FileDescription=PowerOff;FileVersion=2.3.0.15;InternalName=PowerOff;LegalCopyright=ErrorSoft(c);LegalTrademarks=;OriginalFilename=;ProductName=PowerOff;ProductVersion=2.0;Comments=;ProgramID=com.embarcadero.$(ModuleName)</VerInfo_Keys>
+        <VerInfo_Build>15</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_MajorVer>2</VerInfo_MajorVer>
         <Icon_MainIcon>MainIcon.ico</Icon_MainIcon>

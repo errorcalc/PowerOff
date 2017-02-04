@@ -240,6 +240,7 @@ begin
       begin
         Info := Default(TUpdateInfo);
         Info.Urls := Urls;
+        Info.Name := Name;
         Info.Description := 'PowerOff Update';
         TurboUpdate.UpdateFMX.Update(Info);
       end;
