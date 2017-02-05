@@ -1,6 +1,6 @@
 {****************************************************************************************}
 {                                       PowerOff                                         }
-{                                   ErrorSoft(c) 2016                                    }
+{                                ErrorSoft(c) 2016-2017                                  }
 {                                                                                        }
 { Utility was written, to check the suitability of the FireMonkey technology to develop- }
 { in general - yes, at the moment, under Windows (and to simulate the interface UWP),    }
