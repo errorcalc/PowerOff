@@ -84,12 +84,14 @@ type
     procedure BackButtonClick(Sender: TObject);
     procedure TrackBarCustomPainting(Sender: TObject; Canvas: TCanvas; const [Ref] ARect: TRectF);
   private
-    OldTime: DWord;
+    PowerOffTime: DWord;
     IsUsedNotification: Boolean;
+    procedure DoLayoutCustomTime;
     procedure Test;
     procedure SetTime(Time: Integer);
     function PowerOff: Boolean;
     procedure ShowNotification;
+    procedure OnIdle(Sender: TObject; var Done: Boolean);
   end;
 
 var
@@ -167,10 +169,7 @@ begin
 
   TrackBarCustomChange(TrackBarCustom);
 
-  LayoutCustomTime.Position.X := Trunc(
-    TButton(Sender).LocalToAbsolute(PointF(0, 0)).X - LayoutCustomTime.Size.Width + TButton(Sender).Width);
-  LayoutCustomTime.Position.Y := Trunc(
-    TButton(Sender).LocalToAbsolute(PointF(0, 0)).Y - LayoutCustomTime.Size.Height);
+  DoLayoutCustomTime;
   LayoutCustomTime.Visible := Button5.IsPressed;
 end;
 
@@ -178,10 +177,7 @@ procedure TMainForm.Button5Resize(Sender: TObject);
 begin
   if TButton(Sender).IsPressed and not Timer.Enabled then
   begin
-    LayoutCustomTime.Position.X := Trunc(
-      TButton(Sender).LocalToAbsolute(PointF(0, 0)).X - LayoutCustomTime.Size.Width + TButton(Sender).Width);
-    LayoutCustomTime.Position.Y := Trunc(
-      TButton(Sender).LocalToAbsolute(PointF(0, 0)).Y - LayoutCustomTime.Size.Height);
+    DoLayoutCustomTime;
   end;
 end;
 
@@ -227,8 +223,12 @@ begin
     RunTitle.Text := 'До выключения компьютера осталось:';
   end;
 
+  Application.OnIdle := OnIdle;
+
   // AutoUpdate
   {$ifdef AutoUpdate}
+  FooterEs.Text := FooterEs.Text + ', [Auto Update]';
+
   TurboUpdate.Check.CheckUpdate(
     Urls,
     Name,
@@ -246,6 +246,39 @@ begin
       end;
     end);
   {$endif}
+end;
+
+// WHAT IS IT?
+// This is try fix bug with windows 10 and suspending timers!
+// http://www.sql.ru/forum/1203445-a/win-8-1-suspended
+procedure TMainForm.OnIdle(Sender: TObject; var Done: Boolean);
+begin
+  if Timer.Enabled then
+    Test;
+end;
+
+procedure TMainForm.DoLayoutCustomTime;
+const
+  MaxWidth = 640;
+  MinWidth = 370;
+  CalloutOffset = 40;
+var
+  Width: Integer;
+begin
+  Width := Trunc(ClientWidth * 0.80);
+  if Width < MinWidth then
+    Width := MinWidth;
+  if Width > MaxWidth then
+    Width := MaxWidth;
+
+  LayoutCustomTime.Size.Width := Width;
+
+  CalloutPanel.CalloutOffset := CalloutPanel.Width - CalloutOffset;
+
+  LayoutCustomTime.Position.X := Trunc(
+    Button5.LocalToAbsolute(PointF(0, 0)).X - LayoutCustomTime.Size.Width + Button5.Width);
+  LayoutCustomTime.Position.Y := Trunc(
+    Button5.LocalToAbsolute(PointF(0, 0)).Y - LayoutCustomTime.Size.Height);
 end;
 
 function TMainForm.PowerOff: Boolean;
@@ -272,7 +305,7 @@ procedure TMainForm.SetTime(Time: Integer);
 begin
   Display.TextSettings.FontColor := NormalDispColor;
   IsUsedNotification := False;
-  OldTime := GetTickCount div 1000 + Time;
+  PowerOffTime := GetTickCount div 1000 + Time;
   Test;
 
   TabControl.SetActiveTabWithTransition(TabItemRun, TTabTransition.Slide, TTabTransitionDirection.Normal);
@@ -289,7 +322,7 @@ procedure TMainForm.Test;
 var
   Time: Integer;
 begin
-  Time := OldTime - GetTickCount div 1000;
+  Time := PowerOffTime - GetTickCount div 1000;
 
   if Time >= 0 then
     Display.Text := SecondsToString(Time);
